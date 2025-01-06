@@ -1,0 +1,1 @@
+export const LAST_RAFFLES_AMOUNT = 31;
