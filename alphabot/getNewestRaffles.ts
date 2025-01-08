@@ -1,5 +1,5 @@
 import axios from "axios";
-import { LAST_RAFFLES_AMOUNT } from "../utils/config";
+import { LAST_RAFFLES_AMOUNT } from "./utils/config";
 
 const getRaffles = async (page: number, rafflesAmount: number) => {
     const apiClient = axios.create({ baseURL: "https://www.alphabot.app" });

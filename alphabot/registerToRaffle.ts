@@ -1,5 +1,5 @@
 import axios from "axios";
-import { log } from "../utils/helpers";
+import { log } from "./utils/helpers";
 
 const ALPHABOT_API_KEY = process.env.ALPHABOT_API_KEY;
 
