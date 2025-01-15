@@ -20,15 +20,20 @@ export const registerToRaffle = async (raffleSlug: string, raffleName: string, a
 
 		data = response.data;
 	} catch (error: any) {
-		log.error(`Error registering to ${raffleName} raffle: ${error.response.data.errors[0].message}`);
+        const errorMessage = error?.response?.data?.errors[0]?.message || 'Unknown error';
+		log.error(`Error registering to ${raffleName} raffle: ${errorMessage}`);
 		return;
 	}
 
 	if (data.success) {
 		log.success(`Successfully registered to ${raffleName} raffle`);
 	} else {
-        const errorMessage = data?.data?.resultMd?.replace(/\n\n/g, '') || data?.errors[0]?.message || 'Unknown error';
-		log.error(errorMessage+ ` for ${raffleName} raffle`);
+        try {
+            const errorMessage = data?.data?.resultMd?.replace(/\n\n/g, '') || data?.errors[0]?.message || 'Unknown error';
+            log.error(errorMessage+ ` for ${raffleName} raffle`);
+        } catch (error) {
+            log.error(`Unknown error for ${raffleName} raffle`);
+        }
 	}
 
 	return data;
