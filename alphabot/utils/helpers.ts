@@ -35,9 +35,9 @@ export function generateRandomUserAgent(): string {
 }
 
 export const log = {
-	start: (walletAddress: string) => console.log(chalk.white(`------------------------------ START WITH ${walletAddress} ------------------------------`)),
-	success: (msg: string) => console.log(chalk.green("✅" + msg)),
-	error: (msg: string) => console.log(chalk.red("❌" + msg)),
-	info: (msg: string) => console.log(chalk.blue("✍️ " + msg)),
-	warning: (msg: string) => console.log(chalk.yellow("⚠️ " + msg)),
+	start: (profileName: string) => console.log(chalk.white(`------------------------------ START WITH ${profileName} ------------------------------`)),
+	success: (msg: string) => console.log(chalk.green("✅ " + msg)),
+	error: (msg: string) => console.log(chalk.red("❌ " + msg)),
+	info: (msg: string) => console.log(chalk.blue("✍️  " + msg)),
+	warning: (msg: string) => console.log(chalk.yellow("⚠️  " + msg)),
 };

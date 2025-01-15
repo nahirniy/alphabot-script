@@ -4,7 +4,7 @@
   "main": "index.js",
   "type": "commonjs",
   "scripts": {
-    "start": "tsc && node dist/alphabot/startBot.js",
+    "start": "tsc && node dist/startBot.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
