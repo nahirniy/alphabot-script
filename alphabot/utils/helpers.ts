@@ -1,5 +1,14 @@
 import chalk from "chalk";
 
+export const randomDelay = (minSeconds = 1, maxSeconds = 5) => {
+	const minMs = minSeconds * 1000;
+	const maxMs = maxSeconds * 1000;
+
+	const delay = Math.floor(Math.random() * (maxMs - minMs + 1)) + minMs;
+
+	return new Promise((resolve) => setTimeout(resolve, delay));
+};
+
 function getRandomElement<T>(arr: T[]): T {
     return arr[Math.floor(Math.random() * arr.length)]
 }

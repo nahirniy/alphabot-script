@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const getRaffles = async (twitter: string, pageSize: number) => {
+const getRaffles = async (twitter: string) => {
     const apiClient = axios.create({ baseURL: "https://www.alphabot.app" });
 
     try {
@@ -13,7 +13,6 @@ const getRaffles = async (twitter: string, pageSize: number) => {
         params.set('includeProject', 'true');
 
         const response = await apiClient.get('/api/projects?' + params.toString());
-        console.log(response.data.length);
         return response.data;
     } catch (error) {
         console.error("Error fetching last raffles:", error);
@@ -21,6 +20,6 @@ const getRaffles = async (twitter: string, pageSize: number) => {
 }
 
 export const getRafflesByTwitter = async (twitter: string) => {
-    const raffles = await getRaffles(twitter, 30);
+    const raffles = await getRaffles(twitter);
     return raffles;
 }
