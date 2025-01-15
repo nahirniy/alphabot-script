@@ -1,8 +1,8 @@
 import axios from "axios";
 import { LAST_RAFFLES_AMOUNT } from "./utils/config";
 
-const getRaffles = async (page: number, rafflesAmount: number) => {
-    const apiClient = axios.create({ baseURL: "https://www.alphabot.app" });
+const getRaffles = async (page: number, rafflesAmount: number, httpsAgent: any, userAgent: string) => {
+    const apiClient = axios.create({ baseURL: "https://www.alphabot.app", httpsAgent, headers: { 'User-Agent': userAgent } });
 
     try {
         const params = new URLSearchParams();
@@ -21,7 +21,7 @@ const getRaffles = async (page: number, rafflesAmount: number) => {
     }
 }
 
-export const getNewestRaffles = async () => {
+export const getNewestRaffles = async (httpsAgent: any, userAgent: string) => {
     const allRaffles = [];
     let page = 0;
 
@@ -30,13 +30,13 @@ export const getNewestRaffles = async () => {
 
         for (let i = 0; i < totalPages; i++) {
             const rafflesAmount = i === totalPages - 1 ? LAST_RAFFLES_AMOUNT - (totalPages - 1) * 30 : 30;
-            const lastRaffles = await getRaffles(page, rafflesAmount);
+            const lastRaffles = await getRaffles(page, rafflesAmount, httpsAgent, userAgent);
             
             allRaffles.push(...lastRaffles);
             page++;
         }
     } else {
-        const lastRaffles = await getRaffles(page, LAST_RAFFLES_AMOUNT);
+        const lastRaffles = await getRaffles(page, LAST_RAFFLES_AMOUNT, httpsAgent, userAgent);
 
         allRaffles.push(...lastRaffles);
     }

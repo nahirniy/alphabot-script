@@ -1,7 +1,7 @@
 import axios from "axios";
 
-const getRaffles = async (twitter: string) => {
-    const apiClient = axios.create({ baseURL: "https://www.alphabot.app" });
+const getRaffles = async (twitter: string, httpsAgent: any, userAgent: string) => {
+    const apiClient = axios.create({ baseURL: "https://www.alphabot.app", httpsAgent, headers: { 'User-Agent': userAgent } });
 
     try {
         const params = new URLSearchParams();
@@ -19,7 +19,7 @@ const getRaffles = async (twitter: string) => {
     }
 }
 
-export const getRafflesByTwitter = async (twitter: string) => {
-    const raffles = await getRaffles(twitter);
+export const getRafflesByTwitter = async (twitter: string, httpsAgent: any, userAgent: string) => {
+    const raffles = await getRaffles(twitter, httpsAgent, userAgent);
     return raffles;
 }
