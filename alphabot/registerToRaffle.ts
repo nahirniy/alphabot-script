@@ -1,22 +1,30 @@
 import axios from "axios";
 import { log } from "./utils/helpers";
 
-const ALPHABOT_API_KEY = process.env.ALPHABOT_API_KEY;
+export const registerToRaffle = async (raffleSlug: string, raffleName: string, apiKey: string) => {
+    const apiClient = axios.create({ baseURL: "https://api.alphabot.app/v1" });
 
-export const registerToRaffle = async (raffleSlug: string, raffleName: string) => {
-    const apiClient = axios.create({ baseURL: "https://api.alphabot.app/v1/" });
-    
-    const { data } = await apiClient.post(`/register`, {
-        slug: raffleSlug,
-        headers: {
-            Authorization: `Bearer ${ALPHABOT_API_KEY}`,
-        },
-    });
+    let data: any;
+    try {
+        const response = await apiClient.post(`/register`, 
+            { slug: raffleSlug },
+            {
+                headers: {
+                    Authorization: `Bearer ${apiKey}`,
+                },
+            }
+        );
+
+        data = response.data
+    } catch (error: any) {
+        log.error(`Error registering to ${raffleName} raffle: ${error.response.data.errors[0].message}`);
+        return;
+    }
 
     if (data.success) {
         log.success(`Successfully registered to ${raffleName} raffle`);
     } else {
-        log.error(data.error[0].message + ` for ${raffleName} raffle`);
+        log.error(data.data.resultMd + ` for ${raffleName} raffle`);
     }
 
     return data;
