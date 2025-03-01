@@ -1,4 +1,12 @@
 import chalk from "chalk";
+import fs from "fs";
+export const loadFileLines = (filePath: string): string[] => {
+	return fs
+		.readFileSync(filePath, "utf-8")
+		.split("\n")
+		.map((line) => line.trim())
+		.filter((line) => line);
+};
 
 export const randomDelay = (minSeconds = 1, maxSeconds = 5) => {
 	const minMs = minSeconds * 1000;
