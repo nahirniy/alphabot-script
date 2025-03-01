@@ -30,7 +30,10 @@ export const registerToRaffle = async (raffleSlug: string, raffleName: string, a
 		log.success(`Successfully registered to ${raffleName} raffle`);
 	} else {
         try {
-            const errorMessage = data?.data?.resultMd?.replace(/\n\n/g, '') || data?.errors[0]?.message || 'Unknown error';
+			const errorMessage = data?.data?.resultMd?.replace(/\n\n/g, '') || 
+				(Array.isArray(data?.errors) && data.errors.length > 0 ? data.errors[0].message : null) || 
+				'Unknown error';
+
             log.error(errorMessage + ` for ${raffleName} raffle`);
         } catch (error) {
             log.error(`Unknown error for ${raffleName} raffle`);
