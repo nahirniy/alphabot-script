@@ -13,6 +13,4 @@ export const checkKey = (key: string): boolean => {
 		log.error("Invalid key");
 		return false;
 	}
-
-	return false;
 };

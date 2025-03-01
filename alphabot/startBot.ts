@@ -6,7 +6,7 @@ import { getRaffleType } from "./getRaffleType";
 import { getFromRL } from "./getFromRL";
 
 const startBot = async () => {
-    const { key, type } = await getFromRL();
+    const { key, type, amountOfLatestRaffles } = await getFromRL();
 
     const validKey = checkKey(key);
     if (!validKey) {
@@ -20,7 +20,7 @@ const startBot = async () => {
 
     for (const profile of profiles) {
         log.start(profile.name);
-        await runWithProfile(profile, type);
+        await runWithProfile(profile, type, amountOfLatestRaffles);
         log.info("All raffles registered for " + profile.name);
     }
 }

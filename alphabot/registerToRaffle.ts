@@ -5,6 +5,7 @@ export const registerToRaffle = async (raffleSlug: string, raffleName: string, a
 	const apiClient = axios.create({ baseURL: "https://api.alphabot.app/v1" });
 
 	let data: any;
+	
 	try {
 		const response = await apiClient.post(
 			`/register`,
@@ -30,7 +31,7 @@ export const registerToRaffle = async (raffleSlug: string, raffleName: string, a
 	} else {
         try {
             const errorMessage = data?.data?.resultMd?.replace(/\n\n/g, '') || data?.errors[0]?.message || 'Unknown error';
-            log.error(errorMessage+ ` for ${raffleName} raffle`);
+            log.error(errorMessage + ` for ${raffleName} raffle`);
         } catch (error) {
             log.error(`Unknown error for ${raffleName} raffle`);
         }

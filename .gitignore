@@ -5,3 +5,6 @@ dist
 
 userInformation/twitters.txt
 userInformation/profiles.txt
+
+alphabot/profiles/profiles.ts
+alphabot/data/keys.json

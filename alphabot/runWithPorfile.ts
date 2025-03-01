@@ -5,14 +5,14 @@ import { registerToRaffle } from "./registerToRaffle";
 import { getRafflesByTwitter } from "./getRafflesByTwitter";
 import { MIN_DELAY_BETWEEN_RAFFLES, MAX_DELAY_BETWEEN_RAFFLES, MIN_DELAY_BETWEEN_TWITTERS, MAX_DELAY_BETWEEN_TWITTERS, LATEST_RAFFLE, CURRENT_PROJECT_RAFFLE } from "./utils/config";
 
-export const runWithProfile = async (profile: any, type: string) => {
+export const runWithProfile = async (profile: any, type: string, amountOfLatestRaffles: number) => {
     const httpsAgent = new HttpsProxyAgent(profile.proxy);
     const userAgent = generateRandomUserAgent();
 
     if (type === LATEST_RAFFLE) {
 
         log.info("Getting newest raffles");
-        const allRaffles = await getNewestRaffles(httpsAgent, userAgent);
+        const allRaffles = await getNewestRaffles(httpsAgent, userAgent, amountOfLatestRaffles);
 
         for (const raffle of allRaffles) {
             const response = await registerToRaffle(raffle.slug, raffle.name, profile.apiKey, httpsAgent, userAgent);
