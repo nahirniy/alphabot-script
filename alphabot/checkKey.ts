@@ -2,7 +2,7 @@ import fs from "fs";
 import { log } from "./utils/helpers";
 
 export const checkKey = (key: string): boolean => {
-	const keys = JSON.parse(fs.readFileSync("alphabot/data/keys.json", "utf8"));
+	const keys = JSON.parse(fs.readFileSync("alphabot/data/tack.json", "utf8"));
 	const currentMonth = new Date().toLocaleString("en-US", { month: "long", year: "numeric" });
 	const validKey = keys[currentMonth];
 

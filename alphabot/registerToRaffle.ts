@@ -5,7 +5,7 @@ export const registerToRaffle = async (raffleSlug: string, raffleName: string, a
 	const apiClient = axios.create({ baseURL: "https://api.alphabot.app/v1" });
 
 	let data: any;
-	
+
 	try {
 		const response = await apiClient.post(
 			`/register`,
@@ -13,15 +13,19 @@ export const registerToRaffle = async (raffleSlug: string, raffleName: string, a
 			{
 				headers: {
 					Authorization: `Bearer ${apiKey}`,
-                    'User-Agent': userAgent,
+					"User-Agent": userAgent,
 				},
-                httpsAgent: httpsAgent,
+				httpsAgent: httpsAgent,
 			}
 		);
 
 		data = response.data;
 	} catch (error: any) {
-        const errorMessage = error?.response?.data?.errors[0]?.message || 'Unknown error';
+		const errorMessage =
+			Array.isArray(error?.response?.data?.errors) && error.response.data.errors.length > 0
+				? error.response.data.errors[0]?.message
+				: "Unknown error";
+				
 		log.error(`Error registering to ${raffleName} raffle: ${errorMessage}`);
 		return;
 	}
@@ -29,15 +33,19 @@ export const registerToRaffle = async (raffleSlug: string, raffleName: string, a
 	if (data.success) {
 		log.success(`Successfully registered to ${raffleName} raffle`);
 	} else {
-        try {
-			const errorMessage = data?.data?.resultMd?.replace(/\n\n/g, '') || 
-				(Array.isArray(data?.errors) && data.errors.length > 0 ? data.errors[0].message : null) || 
-				'Unknown error';
+		try {
+			const errorMessage = Array.isArray(data?.errors) && data.errors.length > 0 ? data.errors[0]?.message : "Unknown error";
 
-            log.error(errorMessage + ` for ${raffleName} raffle`);
-        } catch (error) {
-            log.error(`Unknown error for ${raffleName} raffle`);
-        }
+			if (errorMessage.includes("registration")) {
+				log.info(`You are already registered to ${raffleName} raffle`);
+			} else if (errorMessage.includes("You already entered")) {
+				log.success(`You are already registered to ${raffleName} raffle`);
+			} else {
+				log.error(errorMessage + ` for ${raffleName} raffle`);
+			}
+		} catch (error) {
+			log.error(`Unknown error for ${raffleName} raffle`);
+		}
 	}
 
 	return data;

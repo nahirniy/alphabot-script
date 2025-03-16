@@ -22,6 +22,8 @@ export const getFromRL = (): Promise<{ key: string; type: string; amountOfLatest
 								RL.close();
 							}
 						);
+					} else {
+						RL.close();
 					}
 				}
 			);
