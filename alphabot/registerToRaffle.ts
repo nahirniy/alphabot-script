@@ -25,7 +25,7 @@ export const registerToRaffle = async (raffleSlug: string, raffleName: string, a
 			Array.isArray(error?.response?.data?.errors) && error.response.data.errors.length > 0
 				? error.response.data.errors[0]?.message
 				: "Unknown error";
-				
+
 		log.error(`Error registering to ${raffleName} raffle: ${errorMessage}`);
 		return;
 	}
@@ -35,7 +35,6 @@ export const registerToRaffle = async (raffleSlug: string, raffleName: string, a
 	} else {
 		try {
 			const errorMessage = Array.isArray(data?.errors) && data.errors.length > 0 ? data.errors[0]?.message : "Unknown error";
-
 			if (errorMessage.includes("registration")) {
 				log.info(`You are already registered to ${raffleName} raffle`);
 			} else if (errorMessage.includes("You already entered")) {
